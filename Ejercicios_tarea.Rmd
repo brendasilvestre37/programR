@@ -6,7 +6,8 @@ output: html_document
 ---
 
 
-# Ejercicios
+# Ejercicios programacion
+
 
 ## Parte 1
 Cargar las variables almacenadas en el siguiente archivo [Rdata](https://goo.gl/uDzU8v)
