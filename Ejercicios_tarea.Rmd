@@ -481,27 +481,35 @@ min(ejerc2$pp, na.rm = T)
 ```
 d) Cree una función que calcule, a partir de los datos de preicpitación mensual, la **climatología (Ene-Dic)** para el **período 1980-2010**.
 ```{r}
-#ejerc4 <- ejerc2 %>%
-#  group_by(pp) %>% 
-#  na.rm = T
-
-for (pp1 in ejerc2$pp){
-  if (pp1 %in% 0:250) {
-    print("desertico")
-  } else if (pp1 %in% 251:500) {
-    print("arido")
-  } else if (pp1 %in% 501: 1030.7) {
-    print("moderadamente lluvioso")
-  } else {
-    print("NA")
-  }
+ejerc4 <- function(datax){
+  rango <- filter(datax, date >= "1980-01-01" & date <="2010-12-31") 
+  monthx <- group_by(rango, month)
+  mediax <- summarise(monthx, ppmean= mean(pp, na.rm = T))
+  return (mediax)
 }
+ejerc4(ejerc2)
 ```
 e) Poltear (boxplot) la variabilidad de los valores mensuales (Ene-Dic) para el período 1980-2013.
 ```{r}
-view(ejerc2)
+ggplot(ejerc2, aes(month, pp, fill=month)) + 
+  ggtitle("Variabilidad de los valores mensuales entre 1980-2013")+
+  labs(x = "Meses", 
+       y = "Precipitación")+
+  geom_boxplot()+
+  theme_bw() + 
+  theme(
+    panel.background = element_rect(fill = "lightblue"),
+    panel.grid.minor = element_line(linetype = "dotted")
+  )+
+  scale_x_discrete(
+    labels = month.abb,
+  )+
+  labs(caption = "Interpretación: Se observa que entre los meses de enero y abril hay mayor
+       variabilidad de los datos de precipitación siendo el mes de marzo el 
+       más resaltante, y los meses de mayo a diciembre tienden mantener valores
+       nulos ya que es temporada seca. También se puede observar que durante
+       todos los meses se presentan valores atípicos debido a errores de lectura
+       o anomalías")
 
-length(levels(data3$NOM_EST))
-table(data3$NOM_EST)
 ```
 
